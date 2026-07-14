@@ -59,23 +59,44 @@
     <Resource Include="Assets\desknote-gelb.png" />
   </ItemGroup>
 
-  <Target Name="EnsureAddonsFolder" AfterTargets="Build">
+  <Target Name="CollectAddonDlls" Returns="@(_AddonDllPaths)">
+    <ItemGroup>
+      <_AddonDllPaths Include="$(MSBuildProjectDirectory)\Addons\DeskNotes.Addon.*\bin\$(Configuration)\$(TargetFramework)\DeskNotes.Addon.*.dll" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CopyAddonDllsToOutput" AfterTargets="Build" DependsOnTargets="CollectAddonDlls">
     <MakeDir Directories="$(OutputPath)Addons" />
+    <Copy SourceFiles="@(_AddonDllPaths)"
+          DestinationFolder="$(OutputPath)Addons"
+          SkipUnchangedFiles="true"
+          Condition="'@(_AddonDllPaths)' != ''" />
     <Copy SourceFiles="$(OutputPath)DeskNotes.Abstractions.dll"
           DestinationFolder="$(OutputPath)Addons"
           SkipUnchangedFiles="true"
           Condition="Exists('$(OutputPath)DeskNotes.Abstractions.dll')" />
   </Target>
 
-  <Target Name="CopyAddonsToPublishDir" AfterTargets="Publish">
+  <!-- ClickOnce und andere Publish-Profile: Addons müssen VOR dem Manifest eingetragen werden -->
+  <Target Name="IncludeAddonDllsInPublish" BeforeTargets="GetCopyToPublishDirectoryItems" DependsOnTargets="CollectAddonDlls">
+    <ItemGroup>
+      <ContentWithTargetPath Include="@(_AddonDllPaths)" TargetPath="Addons\%(Filename)%(Extension)">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ContentWithTargetPath>
+      <ContentWithTargetPath Include="$(OutputPath)DeskNotes.Abstractions.dll"
+                             TargetPath="Addons\DeskNotes.Abstractions.dll"
+                             Condition="Exists('$(OutputPath)DeskNotes.Abstractions.dll')">
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </ContentWithTargetPath>
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CopyAddonsToPublishDir" AfterTargets="Publish" DependsOnTargets="CollectAddonDlls">
     <PropertyGroup>
       <_PublishAddonsDir>$(PublishDir)Addons\</_PublishAddonsDir>
     </PropertyGroup>
     <MakeDir Directories="$(_PublishAddonsDir)" />
-    <ItemGroup>
-      <_AddonDlls Include="$(MSBuildProjectDirectory)\Addons\DeskNotes.Addon.*\bin\$(Configuration)\$(TargetFramework)\DeskNotes.Addon.*.dll" />
-    </ItemGroup>
-    <Copy SourceFiles="@(_AddonDlls)" DestinationFolder="$(_PublishAddonsDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(_AddonDllPaths)" DestinationFolder="$(_PublishAddonsDir)" SkipUnchangedFiles="true" />
     <Copy SourceFiles="$(PublishDir)DeskNotes.Abstractions.dll"
           DestinationFolder="$(_PublishAddonsDir)"
           SkipUnchangedFiles="true"
