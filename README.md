@@ -32,10 +32,18 @@ Minimalistische Desktop-Notizliste für Windows — offline, schnell, immer grif
 
 ## Voraussetzungen
 
-- Windows 10 oder 11
-- [.NET 10 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/10.0)
+- Windows 10 oder 11 (64-bit)
+- Keine separate .NET-Installation nötig — der Installer enthält alles
 
 ## Installation
+
+### Download (empfohlen)
+
+1. [GitHub Release](https://github.com/kptnChr7s/DeskNotes/releases/latest) öffnen
+2. `DeskNotes-Setup-x.x.x-win-x64.exe` herunterladen
+3. Installer ausführen — fertig
+
+Die App wird unter `%LocalAppData%\Programs\DeskNotes` installiert (oder ein anderer gewählter Ordner), inkl. Startmenü-Eintrag. Deinstallation über Windows „Apps installiert“.
 
 ### Aus dem Quellcode bauen
 
@@ -47,29 +55,15 @@ dotnet build DeskNotes.sln -c Release
 
 Die App liegt danach unter `bin\Release\net10.0-windows\DeskNotes.exe`.
 
-### Veröffentlichen (Release-Ordner)
+### Installer lokal bauen
+
+[Inno Setup 6](https://jrsoftware.org/isinfo.php) installieren, dann:
 
 ```powershell
-dotnet publish DeskNotes.csproj -c Release -p:PublishProfile=FolderProfile
+.\installer\build-installer.ps1
 ```
 
-Ausgabe: `publish\` (inkl. `Addons\`-Ordner).
-
-### Portable ZIP (empfohlen für Downloads)
-
-```powershell
-dotnet publish DeskNotes.csproj -c Release -r win-x64 --self-contained true -o publish\portable
-```
-
-> Der `Addons\`-Ordner wird automatisch mitkopiert. Für Releases den gesamten `publish\portable\`-Ordner als ZIP packen.
-
-### Download (empfohlen)
-
-1. [GitHub Release v1.0.0](https://github.com/kptnChr7s/DeskNotes/releases/latest) herunterladen
-2. ZIP entpacken
-3. `DeskNotes.exe` starten — fertig
-
-Kein Installer nötig. Den **gesamten Ordner** behalten (`Addons\` muss neben der EXE liegen).
+Ausgabe: `installer\output\DeskNotes-Setup-1.0.0-win-x64.exe`
 
 ## Datenspeicherung
 

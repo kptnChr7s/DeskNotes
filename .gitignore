@@ -178,6 +178,7 @@ DocProject/Help/html
 
 # Publish output
 publish/
+installer/output/
 
 # Publish Web Output
 *.[Pp]ublish.xml

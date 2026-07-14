@@ -19,15 +19,27 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Resolve version
+        id: version
+        shell: pwsh
+        run: |
+          $v = '${{ github.ref_name }}'.TrimStart('v')
+          "value=$v" >> $env:GITHUB_OUTPUT
+
       - name: Publish portable build
         run: dotnet publish DeskNotes.csproj -c Release -r win-x64 --self-contained true -o publish/portable
 
-      - name: Create ZIP
-        run: Compress-Archive -Path publish/portable/* -DestinationPath DeskNotes-${{ github.ref_name }}-win-x64.zip -Force
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Build installer
         shell: pwsh
+        run: |
+          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
+          & $iscc "/DMyAppVersion=${{ steps.version.outputs.value }}" installer\DeskNotes.iss
 
       - name: Upload release asset
         uses: softprops/action-gh-release@v2
         with:
-          files: DeskNotes-${{ github.ref_name }}-win-x64.zip
+          files: installer/output/DeskNotes-Setup-${{ steps.version.outputs.value }}-win-x64.exe
           generate_release_notes: true
