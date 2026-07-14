@@ -63,25 +63,11 @@ public sealed class ConfettiAddon : IDeskNotesAddon, IDisposable
     {
         var panel = new StackPanel();
 
-        var info = new TextBlock
-        {
-            Text = "Feier-Moment beim Abhaken einer Notiz.",
-            FontSize = 13,
-            Foreground = (System.Windows.Media.Brush)Application.Current.Resources["TextSecondary"],
-            Margin = new Thickness(0, 0, 0, 12),
-            TextWrapping = TextWrapping.Wrap
-        };
-        panel.Children.Add(info);
-
-        var soundCheck = new CheckBox
-        {
-            Content = "Sound abspielen",
-            IsChecked = _settings?.PlaySound ?? true,
-            Margin = new Thickness(0, 0, 0, 8)
-        };
-        soundCheck.Checked += (_, _) => SetPlaySound(true);
-        soundCheck.Unchecked += (_, _) => SetPlaySound(false);
-        panel.Children.Add(soundCheck);
+        panel.Children.Add(AddonUiHelper.CreateDescription("Feier-Moment beim Abhaken einer Notiz."));
+        panel.Children.Add(AddonUiHelper.CreateCheckBox(
+            "Sound abspielen",
+            _settings?.PlaySound ?? true,
+            SetPlaySound));
 
         return panel;
     }

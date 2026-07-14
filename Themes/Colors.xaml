@@ -44,6 +44,11 @@
     <SolidColorBrush x:Key="DangerRed" Color="{StaticResource Color.Danger}"/>
     <SolidColorBrush x:Key="SuccessGreen" Color="{StaticResource Color.Success}"/>
 
+    <!-- Semantic overlays (20–27% accent on transparent) -->
+    <SolidColorBrush x:Key="AccentBorder" Color="#337C6AF7"/>
+    <SolidColorBrush x:Key="BrandGoldBorder" Color="#44E8B84A"/>
+    <SolidColorBrush x:Key="DangerSoft" Color="#33F07178"/>
+
     <SolidColorBrush x:Key="FilterChipBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="FilterChipActive" Color="{StaticResource Color.Surface3}"/>
 

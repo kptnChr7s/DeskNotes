@@ -24,10 +24,7 @@
     TextOptions.TextFormattingMode="Display"
     TextOptions.TextRenderingMode="ClearType">
 
-    <Border x:Name="MainBorder" Style="{StaticResource ShellBorder}">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="28" ShadowDepth="0" Opacity="0.45" Color="#000000"/>
-        </Border.Effect>
+    <Border x:Name="MainBorder" Style="{StaticResource ShellBorder}" Effect="{StaticResource ShellDropShadow}">
 
         <Grid x:Name="DiscoRoot">
             <Grid x:Name="DiscoContentRoot" RenderTransformOrigin="0.5,0.5">
@@ -76,12 +73,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Border Width="42" Height="42"
-                                    CornerRadius="12"
-                                    Background="{StaticResource BrandGoldSoft}"
-                                    BorderBrush="#44E8B84A"
-                                    BorderThickness="1"
-                                    Margin="0,0,14,0">
+                            <Border Style="{StaticResource AppIconBadgeBrand}" Margin="0,0,14,0">
                                 <Image Source="/Assets/desknote-gelb.png"
                                        Width="24" Height="24"
                                        HorizontalAlignment="Center"
@@ -233,7 +225,7 @@
                             Visibility="{Binding IsEmpty, Converter={StaticResource BooleanToVisibilityConverter}}">
                     <Border Width="72" Height="72" CornerRadius="36"
                             Background="{StaticResource AccentSoft}"
-                            BorderBrush="#337C6AF7"
+                            BorderBrush="{StaticResource AccentBorder}"
                             BorderThickness="1"
                             HorizontalAlignment="Center" Margin="0,0,0,18">
                         <TextBlock Text="&#xE70B;" FontFamily="Segoe MDL2 Assets"

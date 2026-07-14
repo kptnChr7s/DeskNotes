@@ -1,9 +1,6 @@
 using DeskNotes.Abstractions;
 using System.Windows;
 using System.Windows.Controls;
-using WpfApp = System.Windows.Application;
-using WpfBrush = System.Windows.Media.Brush;
-using WpfButton = System.Windows.Controls.Button;
 using WpfComboBox = System.Windows.Controls.ComboBox;
 using WpfComboBoxItem = System.Windows.Controls.ComboBoxItem;
 using WinForms = System.Windows.Forms;
@@ -101,28 +98,11 @@ public sealed class TimerAddon : IDeskNotesAddon, IDisposable
     {
         var panel = new StackPanel();
 
-        var info = new TextBlock
-        {
-            Text = "Timer über Tray-Menü oder den Befehl timer in der Eingabe. Im Ruhezustand unsichtbar.",
-            FontSize = 13,
-            Foreground = (WpfBrush)WpfApp.Current.Resources["TextSecondary"],
-            Margin = new Thickness(0, 0, 0, 12),
-            TextWrapping = TextWrapping.Wrap
-        };
-        panel.Children.Add(info);
+        panel.Children.Add(AddonUiHelper.CreateDescription(
+            "Timer über Tray-Menü oder den Befehl timer in der Eingabe. Im Ruhezustand unsichtbar."));
+        panel.Children.Add(AddonUiHelper.CreateFieldLabel("Sound bei Ende"));
 
-        panel.Children.Add(new TextBlock
-        {
-            Text = "Sound bei Ende",
-            Style = TrySettingsStyle("Text.SectionLabel"),
-            Margin = new Thickness(0, 0, 0, 6)
-        });
-
-        var soundCombo = new WpfComboBox
-        {
-            Height = 34,
-            Margin = new Thickness(0, 0, 0, 8)
-        };
+        var soundCombo = AddonUiHelper.CreateComboBox();
 
         foreach (var option in GetSoundOptions())
             soundCombo.Items.Add(option);
@@ -148,15 +128,7 @@ public sealed class TimerAddon : IDeskNotesAddon, IDisposable
                 SetSoundProfile(profile);
         };
         panel.Children.Add(soundCombo);
-
-        var openButton = new WpfButton
-        {
-            Content = "Timer öffnen",
-            Height = 36,
-            Cursor = System.Windows.Input.Cursors.Hand
-        };
-        openButton.Click += (_, _) => _ui?.OpenFlyout();
-        panel.Children.Add(openButton);
+        panel.Children.Add(AddonUiHelper.CreateSecondaryButton("Timer öffnen", (_, _) => _ui?.OpenFlyout()));
 
         return panel;
     }
@@ -172,18 +144,6 @@ public sealed class TimerAddon : IDeskNotesAddon, IDisposable
 
     private static WpfComboBoxItem CreateSoundOption(string label, TimerSoundProfile profile) =>
         new() { Content = label, Tag = profile };
-
-    private static Style? TrySettingsStyle(string key)
-    {
-        try
-        {
-            return (Style)WpfApp.Current.FindResource(key);
-        }
-        catch
-        {
-            return null;
-        }
-    }
 
     private void SetSoundProfile(TimerSoundProfile profile)
     {

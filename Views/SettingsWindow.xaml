@@ -15,10 +15,7 @@
         UseLayoutRounding="True"
         SnapsToDevicePixels="True">
 
-    <Border Style="{StaticResource ShellBorder}">
-        <Border.Effect>
-            <DropShadowEffect BlurRadius="24" ShadowDepth="0" Opacity="0.4" Color="#000000"/>
-        </Border.Effect>
+    <Border Style="{StaticResource ShellBorder}" Effect="{StaticResource ShellDropShadow}">
 
         <Grid Margin="22">
             <Grid.RowDefinitions>
@@ -39,23 +36,20 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Orientation="Horizontal">
-                        <Border Width="38" Height="38" CornerRadius="10"
-                                Background="{StaticResource AccentSoft}"
-                                BorderBrush="#337C6AF7" BorderThickness="1"
-                                Margin="0,0,12,0">
+                        <Border Style="{StaticResource AppIconBadgeAccent}" Margin="0,0,14,0">
                             <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets"
                                        FontSize="16" Foreground="{StaticResource AccentBlue}"
                                        HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                         <StackPanel VerticalAlignment="Center">
-                            <TextBlock Text="Einstellungen" Style="{StaticResource Text.Title}" FontSize="19"/>
+                            <TextBlock Text="Einstellungen" Style="{StaticResource Text.Title}"/>
                             <TextBlock Text="{Binding Version}" Style="{StaticResource Text.Subtitle}" Margin="0,2,0,0"/>
                         </StackPanel>
                     </StackPanel>
 
                     <ui:Button Grid.Column="1" Style="{StaticResource HeaderIconButton}"
                                Click="Close_Click" ToolTip="Schließen">
-                        <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="12"/>
+                        <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="13"/>
                     </ui:Button>
                 </Grid>
             </Border>
@@ -161,8 +155,7 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="0,0,0,10">
-                                        <TextBlock FontWeight="SemiBold" FontSize="13.5"
-                                                   Foreground="{StaticResource TextPrimary}">
+                                        <TextBlock Style="{StaticResource Text.AddonTitle}">
                                             <Run Text="{Binding Name}"/>
                                             <Run Text=" v" Foreground="{StaticResource TextMuted}"/>
                                             <Run Text="{Binding Version}" Foreground="{StaticResource TextMuted}"/>
@@ -182,14 +175,10 @@
 
             <Border Grid.Row="2" BorderBrush="{StaticResource BorderSubtle}"
                     BorderThickness="0,1,0,0" Padding="0,16,0,0" Margin="0,8,0,0">
-                <ui:Button HorizontalAlignment="Right"
-                           Width="120" Height="40"
-                           CornerRadius="10"
-                           Background="{StaticResource AccentGradientBrush}"
-                           BorderThickness="0"
-                           Click="Close_Click">
-                    <TextBlock Text="Fertig" FontSize="13.5" FontWeight="SemiBold" Foreground="White"/>
-                </ui:Button>
+                <ui:Button Style="{StaticResource PrimaryActionButton}"
+                           HorizontalAlignment="Right"
+                           Click="Close_Click"
+                           Content="Fertig"/>
             </Border>
         </Grid>
     </Border>

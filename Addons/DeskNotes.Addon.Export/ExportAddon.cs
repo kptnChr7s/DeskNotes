@@ -44,34 +44,9 @@ public sealed class ExportAddon : IDeskNotesAddon
     {
         var panel = new StackPanel();
 
-        var info = new TextBlock
-        {
-            Text = "Alle Notizen in eine Datei exportieren.",
-            FontSize = 13,
-            Foreground = (System.Windows.Media.Brush)Application.Current.Resources["TextSecondary"],
-            Margin = new Thickness(0, 0, 0, 12),
-            TextWrapping = TextWrapping.Wrap
-        };
-        panel.Children.Add(info);
-
-        var jsonButton = new Button
-        {
-            Content = "Als JSON exportieren",
-            Height = 36,
-            Margin = new Thickness(0, 0, 0, 8),
-            Cursor = System.Windows.Input.Cursors.Hand
-        };
-        jsonButton.Click += (_, _) => ExportJson();
-        panel.Children.Add(jsonButton);
-
-        var mdButton = new Button
-        {
-            Content = "Als Markdown exportieren",
-            Height = 36,
-            Cursor = System.Windows.Input.Cursors.Hand
-        };
-        mdButton.Click += (_, _) => ExportMarkdown();
-        panel.Children.Add(mdButton);
+        panel.Children.Add(AddonUiHelper.CreateDescription("Alle Notizen in eine Datei exportieren."));
+        panel.Children.Add(AddonUiHelper.CreatePrimaryButton("Als JSON exportieren", (_, _) => ExportJson()));
+        panel.Children.Add(AddonUiHelper.CreateSecondaryButton("Als Markdown exportieren", (_, _) => ExportMarkdown()));
 
         return panel;
     }
