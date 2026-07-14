@@ -1,0 +1,85 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationIcon>Assets\desknote-gelb.ico</ApplicationIcon>
+    <AssemblyName>DeskNotes</AssemblyName>
+    <RootNamespace>DeskNotes</RootNamespace>
+    <Version>1.0.0</Version>
+    <Description>Minimalistische Desktop-Notizliste für Windows</Description>
+    <Authors>kptnChr7s</Authors>
+    <RepositoryUrl>https://github.com/kptnChr7s/DeskNotes</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/kptnChr7s/DeskNotes</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Addons\**\*.cs" />
+    <Compile Remove="DeskNotes.Abstractions\**\*.cs" />
+    <Page Remove="Addons\**\*.xaml" />
+    <Page Remove="DeskNotes.Abstractions\**\*.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="DeskNotes.Abstractions\DeskNotes.Abstractions.csproj" />
+    <ProjectReference Include="Addons\DeskNotes.Addon.Export\DeskNotes.Addon.Export.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <ExcludeAssets>contentfiles</ExcludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="Addons\DeskNotes.Addon.Disco\DeskNotes.Addon.Disco.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <ExcludeAssets>contentfiles</ExcludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="Addons\DeskNotes.Addon.Confetti\DeskNotes.Addon.Confetti.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <ExcludeAssets>contentfiles</ExcludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="Addons\DeskNotes.Addon.Timer\DeskNotes.Addon.Timer.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <ExcludeAssets>contentfiles</ExcludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\desknote-gelb.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageReference Include="WPF-UI" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\desknote-gelb.png" />
+  </ItemGroup>
+
+  <Target Name="EnsureAddonsFolder" AfterTargets="Build">
+    <MakeDir Directories="$(OutputPath)Addons" />
+    <Copy SourceFiles="$(OutputPath)DeskNotes.Abstractions.dll"
+          DestinationFolder="$(OutputPath)Addons"
+          SkipUnchangedFiles="true"
+          Condition="Exists('$(OutputPath)DeskNotes.Abstractions.dll')" />
+  </Target>
+
+  <Target Name="CopyAddonsToPublishDir" AfterTargets="Publish">
+    <PropertyGroup>
+      <_PublishAddonsDir>$(PublishDir)Addons\</_PublishAddonsDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(_PublishAddonsDir)" />
+    <ItemGroup>
+      <_AddonDlls Include="$(MSBuildProjectDirectory)\Addons\DeskNotes.Addon.*\bin\$(Configuration)\$(TargetFramework)\DeskNotes.Addon.*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_AddonDlls)" DestinationFolder="$(_PublishAddonsDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(PublishDir)DeskNotes.Abstractions.dll"
+          DestinationFolder="$(_PublishAddonsDir)"
+          SkipUnchangedFiles="true"
+          Condition="Exists('$(PublishDir)DeskNotes.Abstractions.dll')" />
+  </Target>
+
+</Project>

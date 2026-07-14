@@ -1,0 +1,7 @@
+{
+  "id": "desknotes.export",
+  "name": "Export",
+  "version": "1.0.0",
+  "description": "Exportiert Notizen als JSON oder Markdown",
+  "entryType": "DeskNotes.Addon.Export.ExportAddon, DeskNotes.Addon.Export"
+}

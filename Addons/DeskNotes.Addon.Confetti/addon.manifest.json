@@ -1,0 +1,7 @@
+{
+  "id": "desknotes.confetti",
+  "name": "Confetti",
+  "version": "1.0.0",
+  "description": "Konfetti und Sound wenn eine Notiz erledigt wird",
+  "entryType": "DeskNotes.Addon.Confetti.ConfettiAddon, DeskNotes.Addon.Confetti"
+}

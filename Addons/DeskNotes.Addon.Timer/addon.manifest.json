@@ -1,0 +1,7 @@
+{
+  "id": "desknotes.timer",
+  "name": "Timer",
+  "version": "1.0.0",
+  "description": "Unsichtbarer Fokus-Timer mit Schnellauswahl",
+  "entryType": "DeskNotes.Addon.Timer.TimerAddon, DeskNotes.Addon.Timer"
+}

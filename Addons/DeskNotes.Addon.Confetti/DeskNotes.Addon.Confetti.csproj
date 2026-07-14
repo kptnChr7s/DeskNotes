@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>DeskNotes.Addon.Confetti</RootNamespace>
+    <AssemblyName>DeskNotes.Addon.Confetti</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DeskNotes.Abstractions\DeskNotes.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="addon.manifest.json" />
+  </ItemGroup>
+
+  <Target Name="CopyToHostAddons" AfterTargets="Build">
+    <PropertyGroup>
+      <HostAddonsDir>..\..\bin\$(Configuration)\$(TargetFramework)\Addons\</HostAddonsDir>
+    </PropertyGroup>
+    <MakeDir Directories="$(HostAddonsDir)" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(HostAddonsDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ProjectDir)addon.manifest.json"
+          DestinationFiles="$(HostAddonsDir)$(AssemblyName).manifest.json"
+          SkipUnchangedFiles="true"
+          Condition="Exists('$(ProjectDir)addon.manifest.json')" />
+  </Target>
+
+</Project>

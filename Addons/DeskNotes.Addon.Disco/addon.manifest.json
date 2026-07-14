@@ -1,0 +1,7 @@
+{
+  "id": "desknotes.disco",
+  "name": "Disco Mode",
+  "version": "1.0.0",
+  "description": "Party-Modus — tippe disco in der Eingabe",
+  "entryType": "DeskNotes.Addon.Disco.DiscoAddon, DeskNotes.Addon.Disco"
+}
