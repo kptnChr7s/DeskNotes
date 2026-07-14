@@ -180,6 +180,9 @@ DocProject/Help/html
 publish/
 installer/output/
 
+# Legacy / experimentelle Addons
+Addons/DeskNotes.Addon.Invaders/
+
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml

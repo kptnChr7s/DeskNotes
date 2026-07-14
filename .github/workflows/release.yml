@@ -11,6 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
@@ -37,21 +38,30 @@ jobs:
           $setup = "$env:RUNNER_TEMP\innosetup-installer.exe"
           Invoke-WebRequest -Uri "https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe" -OutFile $setup
           Start-Process -FilePath $setup -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/DIR=$isccDir" -Wait
+          if (-not (Test-Path "$isccDir\ISCC.exe")) { throw "ISCC.exe not found after Inno Setup install" }
           "ISCC_PATH=$isccDir\ISCC.exe" >> $env:GITHUB_ENV
 
       - name: Build installer
         shell: pwsh
         run: |
           & $env:ISCC_PATH "/DMyAppVersion=${{ steps.version.outputs.value }}" installer\DeskNotes.iss
+          $exe = "installer\output\DeskNotes-Setup-${{ steps.version.outputs.value }}-win-x64.exe"
+          if (-not (Test-Path $exe)) { throw "Installer not found: $exe" }
 
-      - name: Upload release asset
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           name: DeskNotes ${{ steps.version.outputs.value }}
+          make_latest: true
           body: |
-            Windows-Installer (64-bit, self-contained).
+            ## DeskNotes ${{ steps.version.outputs.value }} — Windows Installer
 
-            **Installation:** `DeskNotes-Setup-${{ steps.version.outputs.value }}-win-x64.exe` herunterladen, doppelklicken, Assistent durchklicken — fertig.
+            **So installierst du:**
+            1. **`DeskNotes-Setup-${{ steps.version.outputs.value }}-win-x64.exe`** herunterladen (unten)
+            2. Doppelklick → Assistent → Installieren
+            3. App aus dem Startmenü starten
+
             Kein ZIP entpacken, keine .NET-Installation nötig.
+            Deinstallation: Windows → Installierte Apps → DeskNotes.
           files: installer/output/DeskNotes-Setup-${{ steps.version.outputs.value }}-win-x64.exe
           generate_release_notes: true

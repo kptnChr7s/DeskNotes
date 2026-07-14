@@ -6,22 +6,44 @@ Minimalistische Desktop-Notizliste für Windows — offline, schnell, immer grif
   <img src="Assets/desknote-gelb.png" alt="DeskNotes" width="96">
 </p>
 
-![.NET](https://img.shields.io/badge/.NET-10.0-purple)
-![Platform](https://img.shields.io/badge/platform-Windows-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+<p align="center">
+  <a href="https://github.com/kptnChr7s/DeskNotes/releases/latest">
+    <img src="https://img.shields.io/github/v/release/kptnChr7s/DeskNotes?label=Installer%20herunterladen&style=for-the-badge&color=7C6AF7" alt="Installer herunterladen">
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/.NET-10.0-purple" alt=".NET 10">
+  <img src="https://img.shields.io/badge/platform-Windows%2010%2F11-blue" alt="Windows">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT">
+</p>
+
+---
+
+## Installation
+
+**Windows 10/11 (64-bit)** — keine .NET-Installation nötig.
+
+1. **[Installer herunterladen](https://github.com/kptnChr7s/DeskNotes/releases/latest)** (`DeskNotes-Setup-win-x64.exe`)
+2. Doppelklick → Assistent → **Installieren**
+3. App aus dem **Startmenü** starten — fertig
+
+Deinstallation: Windows → **Installierte Apps** → DeskNotes.
+
+---
 
 ## Features
 
 - **Notizen** — anlegen, bearbeiten, abhaken, löschen, per Drag & Drop sortieren
-- **Markdown** — `**fett**`, `*kursiv*`, Links, Listen und Inline-Code in Notizen
+- **Markdown** — `**fett**`, `*kursiv*`, Links, Listen und Inline-Code
 - **Filter** — Alle, Aktiv, Erledigt
-- **Tray-Icon** — App läuft im Hintergrund, Schließen minimiert ins Tray
+- **Tray-Icon** — läuft im Hintergrund, Schließen minimiert ins Tray
 - **Globaler Hotkey** — `Strg + Alt + Leertaste` öffnet die Eingabe von überall
 - **Autostart** — optional mit Windows starten
 - **Immer im Vordergrund** — optional aktivierbar
-- **Addon-System** — erweiterbar über DLLs im `Addons/`-Ordner
+- **Addon-System** — erweiterbar über DLLs
 
-### Addons (mitgeliefert)
+### Mitgelieferte Addons
 
 | Addon | Beschreibung | Kurzbefehl |
 |-------|--------------|------------|
@@ -30,50 +52,7 @@ Minimalistische Desktop-Notizliste für Windows — offline, schnell, immer grif
 | **Confetti** | Konfetti beim Abhaken einer Notiz | Einstellungen |
 | **Disco** | Disco-Modus | `disco` |
 
-## Voraussetzungen
-
-- Windows 10 oder 11 (64-bit)
-- Keine separate .NET-Installation nötig — der Installer enthält alles
-
-## Installation
-
-### Download (empfohlen)
-
-1. [GitHub Release](https://github.com/kptnChr7s/DeskNotes/releases/latest) öffnen
-2. **`DeskNotes-Setup-x.x.x-win-x64.exe`** herunterladen (eine einzelne Datei)
-3. Doppelklick → Installations-Assistent → **Weiter / Installieren** → fertig
-
-Kein ZIP entpacken, kein Ordner manuell kopieren. Die App landet im Startmenü (optional Desktop-Verknüpfung). Deinstallation über Windows → „Installierte Apps“.
-
-### Aus dem Quellcode bauen
-
-```powershell
-git clone https://github.com/kptnChr7s/DeskNotes.git
-cd DeskNotes
-dotnet build DeskNotes.sln -c Release
-```
-
-Die App liegt danach unter `bin\Release\net10.0-windows\DeskNotes.exe`.
-
-### Installer lokal bauen
-
-[Inno Setup 6](https://jrsoftware.org/isinfo.php) installieren, dann:
-
-```powershell
-.\installer\build-installer.ps1
-```
-
-Ausgabe: `installer\output\DeskNotes-Setup-1.0.0-win-x64.exe`
-
-## Datenspeicherung
-
-Alle Daten werden lokal gespeichert — keine Cloud, kein Account:
-
-| Datei | Inhalt |
-|-------|--------|
-| `%LocalAppData%\DeskNotes\todo.json` | Notizen |
-| `%LocalAppData%\DeskNotes\settings.json` | Fenster, Filter, Einstellungen |
-| `%LocalAppData%\DeskNotes\addons\` | Addon-Einstellungen |
+---
 
 ## Tastenkürzel
 
@@ -85,22 +64,60 @@ Alle Daten werden lokal gespeichert — keine Cloud, kein Account:
 | `Esc` | Bearbeitung abbrechen / App minimieren |
 | `Strg + Alt + Leertaste` | App öffnen (global) |
 
-## Projektstruktur
+---
+
+## Datenspeicherung
+
+Alle Daten werden lokal gespeichert — keine Cloud, kein Account:
+
+| Pfad | Inhalt |
+|------|--------|
+| `%LocalAppData%\DeskNotes\todo.json` | Notizen |
+| `%LocalAppData%\DeskNotes\settings.json` | Fenster, Filter, Einstellungen |
+| `%LocalAppData%\DeskNotes\addons\` | Addon-Einstellungen |
+
+---
+
+## Für Entwickler
+
+### Voraussetzungen
+
+- Windows 10/11
+- [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0)
+
+### Bauen
+
+```powershell
+git clone https://github.com/kptnChr7s/DeskNotes.git
+cd DeskNotes
+dotnet build DeskNotes.sln -c Release
+```
+
+### Installer bauen
+
+[Inno Setup 6](https://jrsoftware.org/isinfo.php) installieren, dann:
+
+```powershell
+.\installer\build-installer.ps1
+```
+
+Ausgabe: `installer\output\DeskNotes-Setup-x.x.x-win-x64.exe`
+
+### Projektstruktur
 
 ```
 DeskNotes/
-├── DeskNotes.csproj          # Hauptanwendung (WPF)
-├── DeskNotes.Abstractions/   # Addon-Interfaces & Events
-├── Addons/                   # Addon-Projekte
-│   ├── DeskNotes.Addon.Export/
-│   ├── DeskNotes.Addon.Timer/
-│   ├── DeskNotes.Addon.Confetti/
-│   └── DeskNotes.Addon.Disco/
-├── Core/Addons/              # Addon-Host, Loader, EventBus
+├── DeskNotes.csproj          # WPF-Hauptanwendung
+├── DeskNotes.Abstractions/   # Addon-Interfaces & UI-Helfer
+├── Addons/                   # Export, Timer, Confetti, Disco
+├── Core/                     # Addon-Host, Loader, EventBus
 ├── ViewModels/               # MVVM
 ├── Services/                 # Persistenz, Hotkey, Autostart
-└── Themes/                   # Dark-Theme Styles
+├── Themes/                   # Dark-Theme
+└── installer/                # Inno Setup (Windows-Installer)
 ```
+
+---
 
 ## Lizenz
 

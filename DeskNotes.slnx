@@ -1,8 +1,0 @@
-<Solution>
-  <Project Path="DeskNotes.Abstractions/DeskNotes.Abstractions.csproj" />
-  <Project Path="Addons/DeskNotes.Addon.Export/DeskNotes.Addon.Export.csproj" />
-  <Project Path="Addons/DeskNotes.Addon.Disco/DeskNotes.Addon.Disco.csproj" />
-  <Project Path="Addons/DeskNotes.Addon.Confetti/DeskNotes.Addon.Confetti.csproj" />
-  <Project Path="Addons/DeskNotes.Addon.Timer/DeskNotes.Addon.Timer.csproj" />
-  <Project Path="DeskNotes.csproj" />
-</Solution>

@@ -10,11 +10,11 @@
     <ApplicationIcon>Assets\desknote-gelb.ico</ApplicationIcon>
     <AssemblyName>DeskNotes</AssemblyName>
     <RootNamespace>DeskNotes</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Description>Minimalistische Desktop-Notizliste für Windows</Description>
     <Authors>kptnChr7s</Authors>
     <RepositoryUrl>https://github.com/kptnChr7s/DeskNotes</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/kptnChr7s/DeskNotes</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/kptnChr7s/DeskNotes/releases/latest</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
