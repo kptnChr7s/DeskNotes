@@ -1,5 +1,6 @@
 # Builds DeskNotes portable publish + Inno Setup installer.
-# Requires Inno Setup 6: https://jrsoftware.org/isinfo.php
+# Requires Inno Setup 6+: https://jrsoftware.org/isinfo.php
+# Or run once: winget install --id JRSoftware.InnoSetup -e
 
 $ErrorActionPreference = "Stop"
 $root = Split-Path $PSScriptRoot -Parent

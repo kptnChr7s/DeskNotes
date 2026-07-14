@@ -35,7 +35,7 @@ jobs:
           $isccDir = "$env:RUNNER_TEMP\InnoSetup"
           New-Item -ItemType Directory -Force -Path $isccDir | Out-Null
           $setup = "$env:RUNNER_TEMP\innosetup-installer.exe"
-          Invoke-WebRequest -Uri "https://files.jrsoftware.org/is/6/innosetup-6.3.3.exe" -OutFile $setup
+          Invoke-WebRequest -Uri "https://github.com/jrsoftware/issrc/releases/download/is-6_7_3/innosetup-6.7.3.exe" -OutFile $setup
           Start-Process -FilePath $setup -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/DIR=$isccDir" -Wait
           "ISCC_PATH=$isccDir\ISCC.exe" >> $env:GITHUB_ENV
 
