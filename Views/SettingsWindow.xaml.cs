@@ -3,6 +3,7 @@ using DeskNotes.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace DeskNotes.Views;
 
@@ -35,8 +36,12 @@ public partial class SettingsWindow : Window
 
     private void BuildAddonSections(IReadOnlyList<AddonSettingsSection> sections)
     {
+        AddonSectionsHost.Children.Clear();
+
         foreach (var section in sections)
         {
+            DetachFromParent(section.Content);
+
             var label = new TextBlock
             {
                 Text = section.Title,
@@ -50,6 +55,25 @@ public partial class SettingsWindow : Window
                 Child = section.Content
             };
             AddonSectionsHost.Children.Add(card);
+        }
+    }
+
+    private static void DetachFromParent(UIElement element)
+    {
+        if (element is not FrameworkElement frameworkElement)
+            return;
+
+        switch (frameworkElement.Parent)
+        {
+            case System.Windows.Controls.Panel panel:
+                panel.Children.Remove(element);
+                break;
+            case Decorator decorator:
+                decorator.Child = null;
+                break;
+            case ContentControl contentControl:
+                contentControl.Content = null;
+                break;
         }
     }
 
