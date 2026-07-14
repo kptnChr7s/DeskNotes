@@ -63,9 +63,13 @@ dotnet publish DeskNotes.csproj -c Release -r win-x64 --self-contained true -o p
 
 > Der `Addons\`-Ordner wird automatisch mitkopiert. Für Releases den gesamten `publish\portable\`-Ordner als ZIP packen.
 
-### Fertiges Release
+### Download (empfohlen)
 
-Lade die neueste Version von [GitHub Releases](https://github.com/kptnChr7s/DeskNotes/releases) herunter, entpacke die ZIP und starte `DeskNotes.exe`.
+1. [GitHub Release v1.0.0](https://github.com/kptnChr7s/DeskNotes/releases/latest) herunterladen
+2. ZIP entpacken
+3. `DeskNotes.exe` starten — fertig
+
+Kein Installer nötig. Den **gesamten Ordner** behalten (`Addons\` muss neben der EXE liegen).
 
 ## Datenspeicherung
 
