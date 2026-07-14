@@ -40,10 +40,10 @@ Minimalistische Desktop-Notizliste für Windows — offline, schnell, immer grif
 ### Download (empfohlen)
 
 1. [GitHub Release](https://github.com/kptnChr7s/DeskNotes/releases/latest) öffnen
-2. `DeskNotes-Setup-x.x.x-win-x64.exe` herunterladen
-3. Installer ausführen — fertig
+2. **`DeskNotes-Setup-x.x.x-win-x64.exe`** herunterladen (eine einzelne Datei)
+3. Doppelklick → Installations-Assistent → **Weiter / Installieren** → fertig
 
-Die App wird unter `%LocalAppData%\Programs\DeskNotes` installiert (oder ein anderer gewählter Ordner), inkl. Startmenü-Eintrag. Deinstallation über Windows „Apps installiert“.
+Kein ZIP entpacken, kein Ordner manuell kopieren. Die App landet im Startmenü (optional Desktop-Verknüpfung). Deinstallation über Windows → „Installierte Apps“.
 
 ### Aus dem Quellcode bauen
 

@@ -30,16 +30,28 @@ jobs:
         run: dotnet publish DeskNotes.csproj -c Release -r win-x64 --self-contained true -o publish/portable
 
       - name: Install Inno Setup
-        run: choco install innosetup -y --no-progress
+        shell: pwsh
+        run: |
+          $isccDir = "$env:RUNNER_TEMP\InnoSetup"
+          New-Item -ItemType Directory -Force -Path $isccDir | Out-Null
+          $setup = "$env:RUNNER_TEMP\innosetup-installer.exe"
+          Invoke-WebRequest -Uri "https://files.jrsoftware.org/is/6/innosetup-6.3.3.exe" -OutFile $setup
+          Start-Process -FilePath $setup -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/DIR=$isccDir" -Wait
+          "ISCC_PATH=$isccDir\ISCC.exe" >> $env:GITHUB_ENV
 
       - name: Build installer
         shell: pwsh
         run: |
-          $iscc = "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe"
-          & $iscc "/DMyAppVersion=${{ steps.version.outputs.value }}" installer\DeskNotes.iss
+          & $env:ISCC_PATH "/DMyAppVersion=${{ steps.version.outputs.value }}" installer\DeskNotes.iss
 
       - name: Upload release asset
         uses: softprops/action-gh-release@v2
         with:
+          name: DeskNotes ${{ steps.version.outputs.value }}
+          body: |
+            Windows-Installer (64-bit, self-contained).
+
+            **Installation:** `DeskNotes-Setup-${{ steps.version.outputs.value }}-win-x64.exe` herunterladen, doppelklicken, Assistent durchklicken — fertig.
+            Kein ZIP entpacken, keine .NET-Installation nötig.
           files: installer/output/DeskNotes-Setup-${{ steps.version.outputs.value }}-win-x64.exe
           generate_release_notes: true
